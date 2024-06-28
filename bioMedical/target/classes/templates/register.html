@@ -1,0 +1,128 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The above 3 meta tags must come first in the head; any other head content must come after these tags -->
+  <meta name="description" content="User Registration with Spring Boot" />
+  <meta name="author" content="Your Name" />
+  <link rel="icon" href="favicon.ico" />
+
+  <title>User Registration with Spring Boot</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+  <!-- Custom CSS -->
+  <link th:href="@{/css/style.css}" rel="stylesheet" />
+  <style>
+    body{
+      background-image: url('https://t3.ftcdn.net/jpg/06/61/06/74/240_F_661067435_cdi1wpytl4pvfzBYYDryTfcscE1ZpYRB.jpg');
+      background-size: cover; /* Adjusts the size of the background image */
+      background-position: center; /* Centers the background image */
+      background-repeat: no-repeat; 
+      justify-content: center;
+      padding-top:40px;
+    }
+    .temp{
+      width:100%;
+      height:50px;
+      font-size: 25px;
+      background-color: blue;
+    }
+  </style>
+</head>
+
+<body class="gray-bg">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">User Registration</h3>
+          </div>
+          <div class="panel-body">
+            <form autocomplete="off" action="#" th:action="@{/register}" th:object="${user}" method="post"
+              class="m-t" role="form" data-toggle="validator">
+
+              <div th:if="${confirmationMessage}" class="alert alert-success" role="alert"
+                th:text="${confirmationMessage}"></div>
+
+              <div th:if="${alreadyRegisteredMessage}" class="alert alert-danger" role="alert"
+                th:text="${alreadyRegisteredMessage}"></div>
+
+              <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                class="validation-message alert alert-danger" role="alert"></div>
+
+              <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                class="validation-message alert alert-danger" role="alert"></div>
+
+              <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                class="validation-message alert alert-danger" role="alert"></div>
+
+              <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                class="validation-message alert alert-danger" role="alert"></div>
+
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" th:field="*{firstName}" placeholder="First Name" class="form-control" required />
+              </div>
+
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control" required />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" th:field="*{email}" placeholder="Email Address" class="form-control"
+                  data-error="This email address is invalid" required />
+              </div>
+
+              <div class="form-group">
+                <label for="gender">Gender</label>
+                <div>
+                  <label class="radio-inline">
+                    <input type="radio" th:field="*{gender}" th:value="Male" /> Male
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" th:field="*{gender}" th:value="Female" /> Female
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" th:field="*{password}" placeholder="Password" class="form-control" required />
+              </div>
+
+              <button type="submit" class="btn btn-primary block full-width m-b temp">Register</button>
+            </form>
+            <p>Already have an account? <a th:href="@{/showMyLoginPage}">Log in</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+  <!-- Bootstrap -->
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+  </script>
+
+  <!-- Bootstrap Validator plugin -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+
+</body>
+
+</html>
+
