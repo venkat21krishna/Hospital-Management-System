@@ -1,259 +1,301 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <!-- Required meta tags-->
-    <meta charset="UTF-8">
+
+    <link rel="icon" type="../vendor/image/png" href="Error/pic.jpg" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="au theme template">
-    <meta name="author" content="Hau Nguyen">
-    <meta name="keywords" content="au theme template">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-    <!-- Title Page-->
-    <title>Doctor Dashboard</title>
+    <title>Admin page</title>
 
-    <!-- Fontfaces CSS-->
-    <link href="../doctor/css/font-face.css" rel="stylesheet" media="all">
-    <link href="../doctor/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <link href="../doctor/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
-    <link href="../doctor/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
 
-    <!-- Bootstrap CSS-->
-    <link href="../doctor/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+    <!-- Bootstrap core CSS-->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Vendor CSS-->
-    <link href="../doctor/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
-    <link href="../doctor/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
-    <link href="../doctor/vendor/wow/animate.css" rel="stylesheet" media="all">
-    <link href="../doctor/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
-    <link href="../doctor/vendor/slick/slick.css" rel="stylesheet" media="all">
-    <link href="../doctor/vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="../doctor/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+    <!-- Custom fonts for this template-->
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Main CSS-->
-    <link href="../doctor/css/theme.css" rel="stylesheet" media="all">
+    <!-- Page level plugin CSS-->
+    <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
+    <!-- Custom styles for this template-->
+    <link href="../vendor/css/sb-admin.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('https://t3.ftcdn.net/jpg/06/61/06/74/240_F_661067435_cdi1wpytl4pvfzBYYDryTfcscE1ZpYRB.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            /* filter: blur(5px); */
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .container-fluid {
+            width: 99%;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand,
+        .navbar-nav .nav-link {
+            color: #fff !important;
+        }
+
+        .sidebar {
+            background-color: #212529;
+        }
+
+        .sidebar .nav-link {
+            color: #fff !important;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: #0056b3;
+        }
+
+        .form-control {
+            border-radius: 5px;
+        }
+
+        .btn-primary {
+            background-color: #343a40;
+            border-color: #212529;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .table thead th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .wrapper {
+            width: 100%;
+        }
+
+        .content-wrapper {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-wrapper h2 {
+            /* color: #007bff; */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            border-radius: 5px;
+        }
+
+        .card-header {
+            background-color: #343a40;
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+            padding: 15px 0;
+            backdrop-filter: blur(5px);
+        }
+    </style>
 </head>
 
-<body class="animsition">
-    <div class="page-wrapper">
-        <!-- HEADER MOBILE-->
-        <header class="header-mobile d-block d-lg-none">
-            <div class="header-mobile__bar">
-                <div class="container-fluid">
-                    <div class="header-mobile-inner">
-                        <a class="logo" th:href="@{/doctor/index}">
-                            <img src="../doctor/images/icon/logo.png" alt="CoolAdmin" />
-                        </a>
-                        <button class="hamburger hamburger--slider" type="button">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <nav class="navbar-mobile">
-                <div class="container-fluid">
-                    <ul class="navbar-mobile__list list-unstyled">
-                        
-                       
-                        <li>
-                           <a th:href="@{/doctor/index}" >
-                                <i  class="fas fa-table"></i>Appointments</a>
-                        </li>
-                       
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <!-- END HEADER MOBILE-->
+<body id="page-top">
 
-        <!-- MENU SIDEBAR-->
-        <aside class="menu-sidebar d-none d-lg-block">
-            <div class="logo">
-                <a th:href="@{/doctor/index}">
-                    <img src="../doctor/images/icon/logo.png" alt="Doctor+" />
+    <nav class="navbar navbar-expand navbar-dark static-top">
+        <a class="navbar-brand mr-1" href="AdminHome.jsp">Doctor+ Admin Dashboard</a>
+        <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Navbar Search -->
+        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+            <div class="input-group">
+            </div>
+        </form>
+
+        <!-- Navbar -->
+        <ul class="navbar-nav ml-auto ml-md-0">
+            <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user-circle fa-fw"></i>
                 </a>
-            </div>
-            <div class="menu-sidebar__content js-scrollbar1">
-                <nav class="navbar-sidebar">
-                    <ul class="list-unstyled navbar__list">
-                       
-                       
-                        <li class="active">
-                     <a th:href="@{/doctor/index}" >
-                                <i  class="fas fa-table"></i>Appointments</a>
-                          </li>
-                       
-                       
-                    </ul>
-                </nav>
-            </div>
-        </aside>
-        <!-- END MENU SIDEBAR-->
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="Logout" data-toggle="modal" data-target="#logoutModal">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
 
-        <!-- PAGE CONTAINER-->
-        <div class="page-container">
-            <!-- HEADER DESKTOP-->
-            <header class="header-desktop">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="header-wrap">
-                            <form class="form-header" action="" method="POST">
-                               
-                            </form>
-                            <div class="header-button">
-                                <div class="noti-wrap">
-                                    <div class="noti__item js-item-menu">
-                                      
-                                    </div>
-                                    <div class="noti__item js-item-menu">
-                                        
-                                    </div>
-                                    <div class="noti__item js-item-menu">
-                                      
-                                    </div>
-                                </div>
-                                <div class="account-wrap">
-                                    <div class="account-item clearfix js-item-menu">
-                                        <div class="image">
-                                            <img src="images/doc.jpg" alt="John Doe" />
-                                        </div>
-                                        <div class="content">
-                                            <a class="js-acc-btn" href="#">  <p th:text="${name}" >Test</p></a>
-                                        </div>
-                                        <div class="account-dropdown js-dropdown">
-                                            <div class="info clearfix">
-                                                <div class="image">
-                                                    <a href="#">
-                                                        <img src="images/doc.jpg" alt="John Doe" />
-                                                    </a>
-                                                </div>
-                                                <div class="content">
-                                                    <h5 class="name">
-                                                         <p th:text="${user}" >Test</p>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="sidebar navbar-nav">
 
-                                                    </h5>
-                                                    <span class="email">  <p th:text="${email}" /></span>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="account-dropdown__footer">
-                                            
-                                             
-            <form  th:action="@{/logout}"  method="POST">
-	                           <button type="submit" class="btn btn-successbtn btn-lg btn-success">Logout</button> 
-                                       </form>
-                                           </div>
-                                        </div>
-                                      
-                                    </div>
-                                </div>
-                            </div>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/doctor/index}">
+                    <i class="fas fa-fw fa-calendar-check"></i>
+                    <span>Appointments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/doctor/index}">
+                    <i class="fas fa-fw fa-user-cog"></i>
+                    <span>My Profile</span>
+                </a>
+            </li>
+        </ul>
+
+        <div id="content-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="AdminHome.jsp">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Overview</li>
+                </ol>
+
+                <div th:if="${successMessage}" class="alert alert-success" role="alert">
+                    <span th:text="${successMessage}"></span>
+                </div>
+                <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                    <span th:text="${errorMessage}"></span>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-table"></i>
+                        Data Table
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Description</th>
+                                        <th>Reg. Time</th>
+                                        <th>Specialist</th>
+                                        <th>Doctor Response</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="temp : ${app}">
+                                        <td th:text="${temp.id}"></td>
+                                        <td th:text="${temp.name}"></td>
+                                        <td th:text="${temp.email}"></td>
+                                        <td th:text="${temp.date}"></td>
+                                        <td th:text="${temp.time}"></td>
+                                        <td th:text="${temp.description}"></td>
+                                        <td th:text="${temp.regtime}"></td>
+                                        <td th:text="${temp.specialist}"></td>
+                                        <td th:text="${temp.doctorDesc}"></td>
+                                        <td>
+                                            <a th:href="@{/doctor/update-app/{appoId}(appoId=${temp.id})}" class="btn btn-primary" style="display: inline;">Update</a>
+                                          </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-            </header>
-            <!-- END HEADER DESKTOP-->
 
-            <!-- MAIN CONTENT-->
-            <div class="main-content">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-9">
-                               
-                            </div>
-                            <div class="col-lg-3">
-                                
-                            </div>
-                        </div>
-                       
-                                <!-- TOP CAMPAIGN-->
-                               
-                                <!--  END TOP CAMPAIGN-->
-                            </div>
-                        </div>
-                        
-                        <div class="row m-t-30">
-                            <div class="col-md-12">
-                                <!-- DATA TABLE-->
-                                <div class="table-responsive m-b-40">
-                                    <table class="table table-borderless table-data3">
-                                        <thead>
-                                            <tr>
-                    <th>Id</th>
-                     	<th>Name</th>
-                      <th>Email</th>
-                      <th>Date</th>
-                      <th>Time</th>
-                         <th>Description</th>
-                       <th>Reg. Time</th>
-                   
-                      
-                    </tr>
-                  
-                                        </thead>
-                                        
-                                        <tbody>
-                                             	<tr th:each="temp : ${app}">
-       	
-  		<td  th:text="${temp.id}" />	
-				<td   th:text="${temp.name}" />	
-				 <td th:text="${temp.email}"/>	
-					<td  th:text="${temp.description}" />	
-				<td th:text="${temp.time}" />
-				<td th:text="${temp.description}" />
-				<td th:text="${temp.regtime}" />
-				
-		</tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- END DATA TABLE-->
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="copyright">
-                                    <p>Copyright © Doctor+ Application. All rights reserved. </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <!-- /.container-fluid -->
+
+
+
+            </div>
+            <!-- /.content-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+    </div>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <form th:action="@{/logout}" method="POST">
+                        <button type="submit" class="btn btn-success">Logout</button>
+                    </form>
                 </div>
             </div>
         </div>
-
     </div>
 
-    <!-- Jquery JS-->
-    <script src="../doctor/vendor/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap JS-->
-    <script src="../doctor/vendor/bootstrap-4.1/popper.min.js"></script>
-    <script src="../doctor/vendor/bootstrap-4.1/bootstrap.min.js"></script>
-    <!-- Vendor JS       -->
-    <script src="../doctor/vendor/slick/slick.min.js">
-    </script>
-    <script src="../doctor/vendor/wow/wow.min.js"></script>
-    <script src="../doctor/vendor/animsition/animsition.min.js"></script>
-    <script src="../doctor/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-    </script>
-    <script src="../doctor/vendor/counter-up/jquery.waypoints.min.js"></script>
-    <script src="../doctor/vendor/counter-up/jquery.counterup.min.js">
-    </script>
-    <script src="../doctor/vendor/circle-progress/circle-progress.min.js"></script>
-    <script src="../doctor/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="../doctor/vendor/chartjs/Chart.bundle.min.js"></script>
-    <script src="../doctor/vendor/select2/select2.min.js">
-    </script>
+  
 
-    <!-- Main JS-->
-    <script src="../doctor/js/main.js"></script>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="../vendor/chart.js/Chart.min.js"></script>
+    <script src="../vendor/datatables/jquery.dataTables.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../vendor/js/sb-admin.min.js"></script>
+
+    <!-- Demo scripts for this page-->
+    <script src="../vendor/js/demo/datatables-demo.js"></script>
+    <script src="../vendor/js/demo/chart-area-demo.js"></script>
 
 </body>
 
 </html>
-<!-- end document-->

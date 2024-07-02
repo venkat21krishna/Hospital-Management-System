@@ -2,6 +2,7 @@ package com.spring.bioMedical.Controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,12 +19,7 @@ import com.spring.bioMedical.entity.Appointment;
 import com.spring.bioMedical.service.AdminServiceImplementation;
 import com.spring.bioMedical.service.AppointmentServiceImplementation;
 
-/**
- * 
- * @author Soumyadip Chowdhury
- * @github soumyadip007
- *
- */
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -81,6 +77,7 @@ public class UserController {
 		
 		return "user/index";
 	}
+
 	
 	@PostMapping("/save-app")
 	public String saveEmploye(@ModelAttribute("app") Appointment obj) {
@@ -91,6 +88,7 @@ public class UserController {
 		// use a redirect to prevent duplicate submissions
 		return "redirect:/user/index";
 	}
+
 
 	
 	@GetMapping("/about")
@@ -310,8 +308,10 @@ public class UserController {
 		return "user/department-single";
 	}
 
-	@GetMapping("/departments")
-	public String dep(Model model){
+	@RequestMapping("/departments")
+	public String indexes(Model appoint){
+
+	
 		
 		// get last seen
 		String username="";
@@ -338,17 +338,19 @@ public class UserController {
 		         
 		         adminServiceImplementation.save(admin);
 		
-		 
+		// String temp="user@gmail.com";
 		         
-		 Appointment obj=new Appointment();
-		 
-		 obj.setName(admin.getFirstName()+" "+admin.getLastName());
-		 
-		 obj.setEmail(admin.getEmail());
-			
-		 System.out.println(obj);
-		 
-		 model.addAttribute("app",obj);
+		List<Appointment> list=appointmentServiceImplementation.findByEmail(admin.getEmail());
+		
+		appoint.addAttribute("name",admin.getFirstName());
+		
+		appoint.addAttribute("email",admin.getEmail());
+		
+		
+		appoint.addAttribute("user",admin.getFirstName()+" "+admin.getLastName());
+		
+		// add to the spring model
+		appoint.addAttribute("app", list);
 		
 		return "user/departments";
 	}

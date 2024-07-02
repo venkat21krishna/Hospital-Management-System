@@ -8,12 +8,7 @@ import org.springframework.stereotype.Service;
 import com.spring.bioMedical.entity.Admin;
 import com.spring.bioMedical.repository.AdminRepository;
 
-/**
- * 
- * @author Soumyadip Chowdhury
- * @github soumyadip007
- *
- */
+
 @Service
 public class AdminServiceImplementation implements AdminService {
 
@@ -45,6 +40,22 @@ public class AdminServiceImplementation implements AdminService {
 		return adminRepository.findByEmail(user);
 		
 	}
+
+	// @Override
+	// public void delete(String user){
+	// 	adminRepository.delete(user);
+	// }
+
+	@Override
+    public void deleteById(int userId) {
+        adminRepository.deleteById(userId);
+    }
+
+	@Override 
+	public Admin findById(int userId){
+		return adminRepository.findById(userId);
+	}
+	
 
 	@Override
 	public List<Admin> findByRole(String user) {

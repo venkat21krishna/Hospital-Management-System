@@ -6,17 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 
 import org.springframework.data.annotation.Transient;
 
-/**
- * 
- * @author Soumyadip Chowdhury
- * @github soumyadip007
- *
- */
+
 @Entity
 @Table(name = "app")
 public class Appointment {
@@ -47,6 +40,28 @@ public class Appointment {
 	@Transient
 	private String regtime;
 
+	@Column(name = "doctor_desc")
+    private String doctorDesc;
+
+    @Column(name = "specialist")
+    private String specialist;
+
+    // Getters and setters for new columns
+    public String getDoctorDesc() {
+        return doctorDesc;
+    }
+
+    public void setDoctorDesc(String doctorDesc) {
+        this.doctorDesc = doctorDesc;
+    }
+
+    public String getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(String specialist) {
+        this.specialist = specialist;
+    }
 	
 
 	public String getRegtime() {
@@ -122,7 +137,7 @@ public class Appointment {
 	@Override
 	public String toString() {
 		return "Appointment [id=" + id + ", name=" + name + ", email=" + email + ", date=" + date + ", time=" + time
-				+ ", description=" + description + "]";
+				+ ", description=" + description + ", specialist=" + specialist + ", doctorDesc=" + doctorDesc + "]";
 	}
 	
 	

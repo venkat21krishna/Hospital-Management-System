@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Update User</title>
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .form-header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .form-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .form-group input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .form-group.row {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group.row label {
+            width: 30%;
+            text-align: right;
+            padding-right: 20px;
+        }
+
+        .form-group.row .col-sm-9 {
+            width: 70%;
+        }
+
+        .form-group.row input {
+            width: calc(100% - 30px);
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="form-header">
+                Update User
+            </div>
+            <div class="form-body">
+                <form th:action="@{/admin/update-user}" th:object="${user}" method="post">
+                    <!-- Basic Information -->
+                    <div class="form-group row">
+                        <label for="id">User ID</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="id" th:value="${user.id}" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="firstName">First Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="firstName" th:value="${user.firstName}" th:field="*{firstName}"
+                                required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lastName">Last Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="lastName" th:value="${user.lastName}" th:field="*{lastName}"
+                                required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email">Email</label>
+                        <div class="col-sm-9">
+                            <input type="email" id="email" th:value="${user.email}" th:field="*{email}" required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="gender">Gender</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="gender" th:value="${user.gender}" th:field="*{gender}" required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="role">Role</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="role" th:value="${user.role}" th:field="*{role}" required />
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-group row">
+                        <div class="col-sm-9 offset-sm-3">
+                            <button type="submit" class="btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -109,6 +109,9 @@ INSERT INTO `user` (`id`, `confirmation_token`, `username`, `enabled`, `first_na
 ALTER TABLE `app`
   ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `app`
+ADD `doctor_desc` VARCHAR(255),  -- Adjust the data type and length as per your requirement
+ADD `specialist` VARCHAR(100);
 --
 -- Indexes for table `user`
 --

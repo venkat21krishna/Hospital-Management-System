@@ -9,7 +9,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.bioMedical.entity.Admin;
 import com.spring.bioMedical.entity.Appointment;
@@ -17,11 +22,7 @@ import com.spring.bioMedical.service.AdminServiceImplementation;
 import com.spring.bioMedical.service.AppointmentServiceImplementation;
 import com.spring.bioMedical.service.UserService;
 
-/**
- * 
- * @author Soumyadip Chowdhury
- *
- */
+
 @Controller
 @RequestMapping("/doctor")
 public class DoctorController {
@@ -72,7 +73,7 @@ public class DoctorController {
 		         
 		         adminServiceImplementation.save(admin);
 		
-		
+		// String temp="nani@gmail.com";
 		         
 		List<Appointment> list=appointmentServiceImplementation.findAll();
 		
@@ -88,6 +89,36 @@ public class DoctorController {
 		
 		return "doctor/index";
 	}
+
+	@GetMapping("/update-app/{appoId}")
+    public String showappUpdateForm(@PathVariable("appoId") int appoId, Model model) {
+        Appointment appo =appointmentServiceImplementation.findById(appoId);
+        if (appo != null) {
+            model.addAttribute("appo", appo);
+            return "doctorupdateapp";
+        }
+        return "redirect:/doctor/index";
+    }
+
+	@PostMapping("update-app")
+    public String updateappUser(@ModelAttribute("appo") Appointment appoint, RedirectAttributes redirectAttributes) {
+        Appointment existingAppointment = appointmentServiceImplementation.findById(16);
+        if (existingAppointment != null) {
+			    existingAppointment.setName(appoint.getName());
+			    existingAppointment.setEmail(appoint.getEmail());
+			    existingAppointment.setDate(appoint.getDate());
+			    existingAppointment.setTime(appoint.getTime());
+				Date now = new Date();  
+				String log=now.toString();
+				
+				existingAppointment.setRegtime(appoint.getRegtime());
+				appointmentServiceImplementation.save(existingAppointment);
+            	redirectAttributes.addFlashAttribute("successMessage", "Appointment updated successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Appointment update failed.");
+        }
+        return "redirect:/doctor/index";
+    }
 	
 	
 }

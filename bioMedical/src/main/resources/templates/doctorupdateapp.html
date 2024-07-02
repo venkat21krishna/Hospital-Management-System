@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Update Appointment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-row .form-group {
+            flex: 0 0 48%;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            width: 100%;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Update Appointment</h2>
+        <form th:action="@{/admin/update-app}" th:object="${appo}" method="post">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" th:field="*{name}" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" th:field="*{email}" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="text" id="date" th:field="*{date}" class="form-control datepicker" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="time">Time</label>
+                    <input type="text" id="time" th:field="*{time}" class="form-control timepicker" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" th:field="*{description}" class="form-control" rows="3" readonly></textarea>
+            </div>
+            <div class="form-group">
+                <label for="regtime">Registration Time</label>
+                <input type="datetime-local" id="regtime" th:field="*{regtime}" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label for="regtime">specialist</label>
+                <input type="text" id="specialist" th:field="*{specialist}" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label for="regtime">doctor Desc</label>
+                <input type="text" id="doctorDesc" th:field="*{doctorDesc}" class="form-control" required />
+            </div>
+
+            <button type="submit" class="btn-primary">Update</button>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../js/bootstrap-datepicker.js"></script>
+    <script src="../js/jquery.timepicker.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            $('.timepicker').timepicker({
+                timeFormat: 'h:mm p',
+                interval: 30,
+                minTime: '12:00am',
+                maxTime: '11:30pm',
+                defaultTime: 'now',
+                startTime: '12:00am',
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true,
+                
+            });
+            $('.timepicker').on('changeTime', function() {
+            $(this).trigger('input');
+        });
+        });
+    </script>
+</body>
+
+</html>

@@ -9,10 +9,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.bioMedical.entity.Admin;
 import com.spring.bioMedical.entity.Appointment;
@@ -20,12 +23,7 @@ import com.spring.bioMedical.service.AdminServiceImplementation;
 import com.spring.bioMedical.service.AppointmentServiceImplementation;
 import com.spring.bioMedical.service.UserService;
 
-/**
- * 
- * @author Soumyadip Chowdhury
- * @github soumyadip007
- *
- */
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -212,8 +210,6 @@ public class AdminController {
 	@PostMapping("/save-doctor")
 	public String saveEmployee(@ModelAttribute("doctor") Admin admin) {
 		
-		// save the employee
-	//	admin.setId(0);
 		
 		admin.setRole("ROLE_DOCTOR");
 		
@@ -227,25 +223,20 @@ public class AdminController {
 		
 		adminServiceImplementation.save(admin);
 		
-		// use a redirect to prevent duplicate submissions
-		return "redirect:/admin/userdetails";
+		
+		return "redirect:/admin/doctor-details";
 	}
 	
 	
 
 	@GetMapping("/add-admin")
 	public String showForm(Model theModel) {
-		
-		
-		// get last seen
 		String username="";
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof UserDetails) {
-		   username = ((UserDetails)principal).getUsername();
-		  String Pass = ((UserDetails)principal).getPassword();
-		  System.out.println("One + "+username+"   "+Pass);
-		  
-		  
+			username = ((UserDetails)principal).getUsername();
+		  	String Pass = ((UserDetails)principal).getPassword();
+		  	// System.out.println("One + "+username+"   "+Pass);
 		} else {
 		 username = principal.toString();
 		  System.out.println("Two + "+username);
@@ -253,18 +244,15 @@ public class AdminController {
 		
 		Admin admin1 = adminServiceImplementation.findByEmail(username);
 				 
-			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-		    Date now = new Date();  
-		    
-		         String log=now.toString();
-		    
-		         admin1.setLastseen(log);
-		         
-		         adminServiceImplementation.save(admin1);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+		Date now = new Date();  
 		
+		String log=now.toString();
+
+		admin1.setLastseen(log);
 		
-		
-		// create model attribute to bind form data
+		adminServiceImplementation.save(admin1);
+	
 		Admin admin = new Admin();
 		
 		theModel.addAttribute("doctor", admin);
@@ -275,9 +263,6 @@ public class AdminController {
 	
 	@PostMapping("/save-admin")
 	public String saveEmploye(@ModelAttribute("doctor") Admin admin) {
-		
-		// save the employee
-	//	admin.setId(0);
 		
 		admin.setRole("ROLE_ADMIN");
 		
@@ -291,10 +276,68 @@ public class AdminController {
 		
 		adminServiceImplementation.save(admin);
 		
-		// use a redirect to prevent duplicate submissions
-		return "redirect:/admin/userdetails";
+		return "redirect:/admin/user-details";
+	}
+
+	@GetMapping("/add-user")
+	public String showuserForm(Model theModel) {
+		String username="";
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails)principal).getUsername();
+		  	String Pass = ((UserDetails)principal).getPassword();
+		  	// System.out.println("One + "+username+"   "+Pass);
+		} else {
+		 username = principal.toString();
+		  System.out.println("Two + "+username);
+		}
+		
+		Admin admin1 = adminServiceImplementation.findByEmail(username);
+				 
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+		Date now = new Date();  
+		
+		String log=now.toString();
+
+		admin1.setLastseen(log);
+		
+		adminServiceImplementation.save(admin1);
+	
+		Admin admin = new Admin();
+		
+		theModel.addAttribute("doctor", admin);
+		
+		return "admin/addUser";
 	}
 	
+	
+	@PostMapping("/save-user")
+	public String saveEmploy(@ModelAttribute("doctor") Admin admin) {
+		
+		admin.setRole("ROLE_USER");
+		
+		admin.setPassword("default");
+		
+		admin.setEnabled(true);
+		
+		admin.setConfirmationToken("ByAdmin-Panel");
+		
+		System.out.println(admin);
+		
+		adminServiceImplementation.save(admin);
+		
+		return "redirect:/admin/user-details";
+	}
+
+
+
+	
+
+
+
+
+
+
 	@GetMapping("/edit-my-profile")
 	public String EditForm(Model theModel) {
 		
@@ -309,20 +352,20 @@ public class AdminController {
 		  System.out.println("Two + "+username);
 		}	
 		
-		// get the employee from the service
+		
 		
 		Admin admin = adminServiceImplementation.findByEmail(username);
 				 
-			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-		    Date now = new Date();  
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+		Date now = new Date();  
 		    
-		         String log=now.toString();
+		String log=now.toString();
 		    
-		         admin.setLastseen(log);
+		admin.setLastseen(log);
 		         
-		         adminServiceImplementation.save(admin);
+		adminServiceImplementation.save(admin);
 		
-		System.out.println(admin);
+		// System.out.println(admin);
 		
 		theModel.addAttribute("profile", admin);
 		
@@ -351,37 +394,120 @@ public class AdminController {
 		String username="";
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof UserDetails) {
-		   username = ((UserDetails)principal).getUsername();
-		  String Pass = ((UserDetails)principal).getPassword();
-		  System.out.println("One + "+username+"   "+Pass);
-		  
-		  
+			username = ((UserDetails)principal).getUsername();
+			String Pass = ((UserDetails)principal).getPassword();
+			System.out.println("One + "+username+"   "+Pass);
 		} else {
 		 username = principal.toString();
 		  System.out.println("Two + "+username);
 		}
-		
 		Admin admin = adminServiceImplementation.findByEmail(username);
-				 
-			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-		    Date now = new Date();  
-		    
-		         String log=now.toString();
-		    
-		         admin.setLastseen(log);
-		         
-		         adminServiceImplementation.save(admin);
-		
-		
-		         
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+		Date now = new Date();  
+		String log=now.toString();
+		admin.setLastseen(log);
+		adminServiceImplementation.save(admin);
 		List<Appointment> list=appointmentServiceImplementation.findAll();
-		
-		
-		
-		// add to the spring model
 		model.addAttribute("app", list);
 		
 		
 		return "admin/appointment";
 	}
+
+
+	@DeleteMapping("/deleting/{userId}")
+    public String deleteUser(@PathVariable("userId") int userId, RedirectAttributes redirectAttributes) {
+        Admin user = adminServiceImplementation.findById(userId);
+        if (user != null) {
+            adminServiceImplementation.deleteById(userId);			
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Deletion failed.");
+        }
+		if(user != null && "ROLE_ADMIN".equals(user.getRole())){
+			redirectAttributes.addFlashAttribute("successMessage", "Admin deleted successfully.");
+			return "redirect:/admin/admin-details";
+		}
+		else if( user != null && "ROLE_DOCTOR".equals(user.getRole())){
+			redirectAttributes.addFlashAttribute("successMessage", "Doctor deleted successfully.");
+			return "redirect:/admin/doctor-details";
+		}
+		else if(user != null && "ROLE_USER".equals(user.getRole())){
+			redirectAttributes.addFlashAttribute("successMessage", "User deleted successfully.");
+		}
+        return "redirect:/admin/user-details";
+    }
+
+	@DeleteMapping("/delete-app/{appointId}")
+	public String deleteApp(@PathVariable("appointId") int apId, RedirectAttributes redirectAttributes){
+		Appointment apps=appointmentServiceImplementation.findById(apId);
+		if(apps!=null){
+			appointmentServiceImplementation.deleteById(apId);
+			redirectAttributes.addFlashAttribute("successMessage", "Appointment deleted successfully.");
+		}
+		else{
+            redirectAttributes.addFlashAttribute("errorMessage", "Deletion failed.");
+		}
+		return "redirect:/admin/doctor-details";
+	}
+
+	@GetMapping("/update-app/{appoId}")
+    public String showappUpdateForm(@PathVariable("appoId") int appoId, Model model) {
+        Appointment appo =appointmentServiceImplementation.findById(appoId);
+        if (appo != null) {
+            model.addAttribute("appo", appo);
+            return "updateappo";
+        }
+        return "redirect:/admin/user-details";
+    }
+
+	@PostMapping("update-app")
+    public String updateappUser(@ModelAttribute("appo") Appointment appoint, RedirectAttributes redirectAttributes) {
+        Appointment existingAppointment = appointmentServiceImplementation.findById(16);
+        if (existingAppointment != null) {
+			    existingAppointment.setName(appoint.getName());
+			    existingAppointment.setEmail(appoint.getEmail());
+			    existingAppointment.setDate(appoint.getDate());
+			    existingAppointment.setTime(appoint.getTime());
+				Date now = new Date();  
+				String log=now.toString();
+				
+				existingAppointment.setRegtime(appoint.getRegtime());
+				appointmentServiceImplementation.save(existingAppointment);
+            	redirectAttributes.addFlashAttribute("successMessage", "Appointment updated successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Appointment update failed.");
+        }
+        return "redirect:/admin/appointments";
+    }
+
+	@GetMapping("/update-user/{userId}")
+    public String showUpdateForm(@PathVariable("userId") int userId, Model model) {
+        Admin user = adminServiceImplementation.findById(userId);
+        if (user != null) {
+            model.addAttribute("user", user);
+            return "updateuser";
+        }
+        return "redirect:/admin/user-details";
+    }
+
+    @PostMapping("update-user")
+    public String updateUser(@ModelAttribute("user") Admin updatedUser, RedirectAttributes redirectAttributes) {
+		int ids=updatedUser.getId();
+        Admin existingUser = adminServiceImplementation.findById(ids);
+        if (existingUser != null) {
+			    existingUser.setFirstName(updatedUser.getFirstName());
+			    existingUser.setLastName(updatedUser.getLastName());
+			    existingUser.setEmail(updatedUser.getEmail());
+			    existingUser.setGender(updatedUser.getGender());
+			    existingUser.setRole(updatedUser.getRole());
+				adminServiceImplementation.save(existingUser);
+            redirectAttributes.addFlashAttribute("successMessage", "User updated successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "User update failed.");
+			
+        }
+        return "redirect:/admin/user-details";
+    }
+
+	
 }

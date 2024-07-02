@@ -2,21 +2,13 @@ package com.spring.bioMedical.service;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.bioMedical.entity.User;
 import com.spring.bioMedical.repository.UserRepository;
 
-/**
- * 
- * @author Soumyadip Chowdhury
- * @github soumyadip007
- *
- */
+
 @Service("userService")
 public class UserService {
 
@@ -37,6 +29,10 @@ public class UserService {
 	
 	public void saveUser(User user) {
 		userRepository.save(user);
+	}
+
+	public void deleteById(int userId) {
+		userRepository.deleteById(userId);
 	}
 	
 	public List<User> findAll() {

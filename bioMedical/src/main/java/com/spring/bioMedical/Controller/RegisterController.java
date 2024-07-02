@@ -22,28 +22,23 @@ import com.spring.bioMedical.entity.User;
 import com.spring.bioMedical.service.EmailService;
 import com.spring.bioMedical.service.UserService;
 
-/**
- * 
- * @author Soumyadip Chowdhury
- * @github soumyadip007
- *
- */
+
 @Controller
 public class RegisterController {
 	
-	//private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	private UserService userService;
 	private EmailService emailService;
 	
 	@Autowired
 	public RegisterController(
 			UserService userService, EmailService emailService) {
-		//this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+		
 		this.userService = userService;
 		this.emailService = emailService;
 	}
 	
-	// Return registration form template
+	
 	@RequestMapping(value="/register", method = RequestMethod.GET)
 
 	public ModelAndView showRegistrationPage(ModelAndView modelAndView, User user){
@@ -52,11 +47,11 @@ public class RegisterController {
 		return modelAndView;
 	}
 	
-	// Process form input data
+	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid User user, BindingResult bindingResult, HttpServletRequest request) {
 				
-		// Lookup user in database by e-mail
+		
 		User userExists = userService.findByEmail(user.getEmail());
 		
 		System.out.println(userExists);
@@ -69,20 +64,15 @@ public class RegisterController {
 			
 		if (bindingResult.hasErrors()) { 
 			modelAndView.setViewName("register");		
-		} else { // new user so we create user and send confirmation e-mail
-					
-			// Disable user until they click on confirmation link in email
+		} else { 
 		    
 			user.setEnabled(false);
 			user.setRole("ROLE_USER");
 		      
 			
-		    // Generate random 36-character string token for confirmation link
 		    user.setConfirmationToken(UUID.randomUUID().toString());
 		        
 		    userService.saveUser(user);
-				
-		//	String appUrl = request.getScheme() + "://" + request.getServerName();
 			
 		    String appUrl = "localhost:8080";
 		    
@@ -98,20 +88,21 @@ public class RegisterController {
 			
 			modelAndView.addObject("confirmationMessage", "A confirmation e-mail has been sent to " + user.getEmail());
 			modelAndView.setViewName("register");
+			System.out.println("hello inside the register");
 		}
 			
 		return modelAndView;
 	}
 	
-	// Process confirmation link
+	
 	@RequestMapping(value="/confirm", method = RequestMethod.GET)
 	public ModelAndView confirmRegistration(ModelAndView modelAndView, @RequestParam("token") String token) {
 			
 		User user = userService.findByConfirmationToken(token);
 			
-		if (user == null) { // No token found in DB
+		if (user == null) { 
 			modelAndView.addObject("invalidToken", "Oops!  This is an invalid confirmation link.");
-		} else { // Token found
+		} else { 
 			modelAndView.addObject("confirmationToken", user.getConfirmationToken());
 		}
 			
@@ -119,7 +110,7 @@ public class RegisterController {
 		return modelAndView;		
 	}
 	
-	// Process confirmation link
+	
 	@RequestMapping(value="/confirm", method = RequestMethod.POST)
 	public ModelAndView confirmRegistration(ModelAndView modelAndView, BindingResult bindingResult, @RequestParam Map<String, String> requestParams, RedirectAttributes redir) {
 				
@@ -129,8 +120,7 @@ public class RegisterController {
 		
 		Strength strength = passwordCheck.measure(requestParams.get("password"));
 		
-		if (strength.getScore() < 3) {
-			//modelAndView.addObject("errorMessage", "Your password is too weak.  Choose a stronger one.");
+		if (strength.getScore() < 2) {
 			bindingResult.reject("password");
 			
 			redir.addFlashAttribute("errorMessage", "Your password is too weak.  Choose a stronger one.");
@@ -140,14 +130,13 @@ public class RegisterController {
 			return modelAndView;
 		}
 	
-		// Find the user associated with the reset token
+		
 		User user = userService.findByConfirmationToken(requestParams.get("token"));
 
-		// Set new password
-	//	user.setPassword(bCryptPasswordEncoder.encode(requestParams.get("password")));
+		
 		user.setPassword(requestParams.get("password"));
 
-		// Set user to enabled
+		
 		user.setEnabled(true);
 		
 		// Save user

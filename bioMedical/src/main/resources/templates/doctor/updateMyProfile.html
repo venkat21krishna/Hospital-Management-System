@@ -2,16 +2,13 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
   <link rel="icon" type="../vendor/image/png" href="Error/pic.jpg" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-
   <title>Admin page</title>
-
 
   <!-- Bootstrap core CSS-->
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -32,7 +29,6 @@
       background-repeat: no-repeat;
       height: 100vh;
       margin: 0;
-      /* filter: blur(5px); */
     }
 
     .content-wrapper {
@@ -89,30 +85,13 @@
       color: #fff;
     }
 
-    .wrapper {
-      width: 100%;
-    }
-
-    .content-wrapper {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 20px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .content-wrapper h2 {
-      /* color: #007bff; */
+    .modal-header {
+      background-color: #343a40;
+      color: #fff;
       text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-control {
-      border-radius: 5px;
+      font-weight: bold;
+      padding: 15px 0;
+      backdrop-filter: blur(5px);
     }
 
     .card-header {
@@ -122,6 +101,7 @@
       font-weight: bold;
       padding: 15px 0;
       backdrop-filter: blur(5px);
+      margin-bottom: 5px;
     }
   </style>
 </head>
@@ -200,142 +180,73 @@
           <span>My Profile</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin/add-user}">
-          <i class="fas fa-fw fa-user-cog"></i>
-          <span>Add User</span>
-        </a>
-      </li>
     </ul>
 
     <div id="content-wrapper">
 
-      <div class="container-fluid">
-
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="AdminHome.jsp">Dashboard</a>
-          </li>
-          <li class="breadcrumb-item active">Overview</li>
-        </ol>
-
-        <div th:if="${successMessage}" class="alert alert-success" role="alert">
-          <span th:text="${successMessage}"></span>
+      <div class="content-wrapper">
+        <div class="card-header">
+          <h2>Update Profile Details</h2>
         </div>
-        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
-          <span th:text="${errorMessage}"></span>
-        </div>
-
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            Data Table
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Description</th>
-                    <th>Reg. Time</th>
-                    <th>Options</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr th:each="temp : ${app}">
-
-                    <td th:text="${temp.id}" />
-                    <td th:text="${temp.name}" />
-                    <td th:text="${temp.email}" />
-                    <td th:text="${temp.date}" />
-                    <td th:text="${temp.time}" />
-                    <td th:text="${temp.description}" />
-                    <td th:text="${temp.regtime}" />
-                    <td th:text="${temp.specialist}" />
-
-                    <td>
-                      <form th:action="@{/admin/delete-app/{appointId}(appointId=${temp.id})}" method="post"
-                        style="display:inline;">
-                        <input type="hidden" name="_method" value="delete" />
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                      </form>
-                      <a th:href="@{/admin/update-app/{appoId}(appoId=${temp.id})}" class="btn btn-primary" style="display: inline;">Update</a>
-                    </td>
-
-                  </tr>
-
-                </tbody>
-              </table>
+        <form th:action="@{/admin/update}" th:object="${profile}" method="POST">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">First Name:</label>
+            <div class="col-sm-9">
+              <input type="text" th:field="*{firstName}" class="form-control" required placeholder="First Name">
             </div>
           </div>
-          <div class="card-footer small text-muted">Doctor+</div>
-        </div>
-        <!-- /.container-fluid -->
-      </div>
-      <!-- /.content-wrapper -->
-    </div>
-    <!-- /#wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-
-
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Last Name:</label>
+            <div class="col-sm-9">
+              <input type="text" th:field="*{lastName}" class="form-control" required placeholder="Last Name">
+            </div>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-
-            <form th:action="@{/logout}" method="POST">
-
-
-              <button type="submit" class="btn btn-success">Logout</button>
-            </form>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Email:</label>
+            <div class="col-sm-9">
+              <input type="email" th:field="*{email}" class="form-control" required placeholder="Email" readonly>
+            </div>
           </div>
-        </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Gender:</label>
+            <div class="col-sm-9">
+              <input type="text" th:field="*{gender}" class="form-control" required placeholder="Gender">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12 text-center">
+              <button type="submit" class="btn btn-primary btn-lg btn-block">Update</button>
+            </div>
+          </div>
+        </form>
       </div>
+
     </div>
+    <!-- /.content-wrapper -->
 
+  </div>
+  <!-- /#wrapper -->
 
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
 
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Page level plugin JavaScript-->
-    <script src="../vendor/chart.js/Chart.min.js"></script>
-    <script src="../vendor/datatables/jquery.dataTables.js"></script>
-    <script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="../vendor/js/sb-admin.min.js"></script>
-
-    <!-- Demo scripts for this page-->
-    <script src="../vendor/js/demo/datatables-demo.js"></script>
-    <script src="../vendor/js/demo/chart-area-demo.js"></script>
-
-</body>
-
-</html>
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <form th:action="@{/logout}" method="POST">
+            <button type="submit" class="btn btn-success">Logout</button>
+          </form>
+        </div>
