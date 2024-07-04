@@ -87,7 +87,25 @@ ALTER TABLE `user`
 ALTER TABLE `app`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
+CREATE TABLE `meds` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `exp` varchar(255) NOT NULL,
+  `reg` varchar(255) NOT NULL,
+  `count` int(10) NOT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+
+INSERT INTO `meds` (`id`, `name`, `exp`, `reg`, `count`) VALUES
+(1, 'paracetemol', '2026-04-21', '2024-04-21', 1000),
+(2, 'paracetemol', '2026-04-21', '2024-04-21', 1000),
+(3, 'paracetemol', '2026-04-21', '2024-04-21', 1000),
+(4, 'paracetemol', '2026-04-21', '2024-04-21', 1000),
+(5, 'paracetemol', '2026-04-21', '2024-04-21', 1000);
+
+ALTER TABLE `meds`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 CREATE TABLE `doctor` (
   `id` int(11) NOT NULL,
@@ -106,20 +124,5 @@ INSERT INTO `doctor` (`id`,`medicalnum`,`specialist`) VALUES
 
 
 
-CREATE TABLE `medicines` (
-  `id` int(11) NOT NULL,
-  `medName` varchar(255) DEFAULT NULL,
-  `expDate` text NOT NULL,
-  `regDate` text NOT NULL,
-  `count` int(10) NOT NULL,
-   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-INSERT INTO `medicines` (`id`,`medName`,`expDate`,`regDate`,`count`) VALUES
-(1,'paracetemol','21-04-2026','21-04-2024',1000),
-(2,'paracetemol','21-04-2026','21-04-2024',1000),
-(3,'paracetemol','21-04-2026','21-04-2024',1000),
-(4,'paracetemol','21-04-2026','21-04-2024',1000),
-(5,'paracetemol','21-04-2026','21-04-2024',1000);
 
-COMMIT;

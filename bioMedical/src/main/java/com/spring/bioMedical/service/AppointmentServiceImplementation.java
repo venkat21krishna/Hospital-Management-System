@@ -66,6 +66,9 @@ public class AppointmentServiceImplementation {
                 + "Appointment ID: " + appointment.getId() + "\n"
                 + "Date: " + appointment.getDate() + "\n"
                 + "Time: " + appointment.getTime() + "\n"
+                + "Time: " + appointment.getTime() + "\n"
+                + "Problem: " + appointment.getDescription() + "\n"
+                + "Doctor Response: " + appointment.getDoctorDesc() + "\n"
                 + "Thank you for choosing our service.\n\n"
                 + "Best regards,\n"
                 + "Your Hospital Team");

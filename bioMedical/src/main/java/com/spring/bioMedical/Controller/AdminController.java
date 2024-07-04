@@ -18,12 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.bioMedical.entity.Admin;
-import com.spring.bioMedical.entity.Med;
 import com.spring.bioMedical.entity.Appointment;
+import com.spring.bioMedical.entity.Med;
 import com.spring.bioMedical.service.AdminServiceImplementation;
 import com.spring.bioMedical.service.AppointmentServiceImplementation;
 import com.spring.bioMedical.service.MedicineServiceImplementation;
-
 import com.spring.bioMedical.service.UserService;
 
 
@@ -44,11 +43,11 @@ public class AdminController {
 	
 	@Autowired
 	public AdminController(UserService userService,AdminServiceImplementation obj,
-			AppointmentServiceImplementation app, MedicineServiceImplementation medicines) {
+			AppointmentServiceImplementation app, MedicineServiceImplementation meds) {
 		this.userService = userService;
 		adminServiceImplementation=obj;
 		appointmentServiceImplementation=app;
-		medicineServiceImplementation=medicines;
+		medicineServiceImplementation=meds;
 	}
 	
 	
@@ -173,10 +172,8 @@ public class AdminController {
 		
 		return "admin/admin";
 	}
-	
-	
-	@GetMapping("/add-doctor")
-	public String showFormForAdd(Model theModel) {
+	@GetMapping("/add-medicine")
+	public String showMedicineAdd(Model theModel) {
 		
 		
 		// get last seen
@@ -206,6 +203,48 @@ public class AdminController {
 		
 		
 		// create model attribute to bind form data
+		Med meds = new Med();
+		
+		theModel.addAttribute("meds", meds);
+		
+		return "admin/addMedicine";
+	}
+	
+
+	@PostMapping("/save-medicine")
+	public String saveMedicine(@ModelAttribute("meds") Med med) {
+
+		medicineServiceImplementation.save(med);
+
+		return "redirect:/admin/get-medicine";
+	}
+
+
+	@GetMapping("/add-doctor")
+	public String showFormForAdd(Model theModel) {
+		
+		
+		// get last seen
+		String username="";
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+		   username = ((UserDetails)principal).getUsername();
+		  String Pass = ((UserDetails)principal).getPassword();
+		  System.out.println("One + "+username+"   "+Pass);
+		  
+		  
+		} else {
+		 username = principal.toString();
+		  System.out.println("Two + "+username);
+		}
+		
+		Admin admin1 = adminServiceImplementation.findByEmail(username);
+				 
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+		    Date now = new Date();  		    
+		         String log=now.toString();		    
+		         admin1.setLastseen(log);		         
+		         adminServiceImplementation.save(admin1);
 		Admin admin = new Admin();
 		
 		theModel.addAttribute("doctor", admin);
@@ -404,11 +443,27 @@ public class AdminController {
 		return "admin/appointment";
 	}
 
-	@RequestMapping("/get-medicines")
+	@RequestMapping("/get-medicine")
 	public String mediciness(Model model){
+		String username="";
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails)principal).getUsername();
+			String Pass = ((UserDetails)principal).getPassword();
+			System.out.println("One + "+username+"   "+Pass);
+		} else {
+		 username = principal.toString();
+		  System.out.println("Two + "+username);
+		}
+		Admin admin = adminServiceImplementation.findByEmail(username);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+		Date now = new Date();  
+		String log=now.toString();
+		admin.setLastseen(log);
+		adminServiceImplementation.save(admin);
 			
 		List<Med> list=medicineServiceImplementation.findAll();
-		model.addAttribute("medicines", list);
+		model.addAttribute("meds", list);
 		
 		
 		return "admin/medDetails";
@@ -437,6 +492,19 @@ public class AdminController {
         return "redirect:/admin/user-details";
     }
 
+	@DeleteMapping("/meddeleting/{medId}")
+	public String deleteMed(@PathVariable("medId") int apId, RedirectAttributes redirectAttributes){
+		Med apps=medicineServiceImplementation.findById(apId);
+		if(apps!=null){
+			medicineServiceImplementation.deleteById(apId);
+			redirectAttributes.addFlashAttribute("successMessage", "Medicine deleted successfully.");
+		}
+		else{
+            redirectAttributes.addFlashAttribute("errorMessage", "Medicine Deletion failed.");
+		}
+		return "redirect:/admin/get-medicine";
+	}
+
 	@DeleteMapping("/delete-app/{appointId}")
 	public String deleteApp(@PathVariable("appointId") int apId, RedirectAttributes redirectAttributes){
 		Appointment apps=appointmentServiceImplementation.findById(apId);
@@ -449,6 +517,32 @@ public class AdminController {
 		}
 		return "redirect:/admin/appointment";
 	}
+
+	@GetMapping("/update-med/{medId}")
+    public String showmedUpdateForm(@PathVariable("medId") int appoId, Model model) {
+        Med appo =medicineServiceImplementation.findById(appoId);
+        if (appo != null) {
+            model.addAttribute("appo", appo);
+            return "updatemed";
+        }
+        return "redirect:/admin/medDetails";
+    }
+
+	@PostMapping("update-med")
+    public String updatemedUser(@ModelAttribute("appo") Med appoint, RedirectAttributes redirectAttributes) {
+        Med existingAppointment = medicineServiceImplementation.findById(appoint.getId());
+        if (existingAppointment != null) {
+			    existingAppointment.setName(appoint.getName());
+			    existingAppointment.setExp(appoint.getExp());
+			    existingAppointment.setReg(appoint.getReg());
+			    existingAppointment.setCount(appoint.getCount());
+				medicineServiceImplementation.save(existingAppointment);
+            	redirectAttributes.addFlashAttribute("successMessage", "Medicine by admin updated successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Medicine by admin update failed.");
+        }
+        return "redirect:/admin/get-medicine";
+    }
 
 	@GetMapping("/update-app/{appoId}")
     public String showappUpdateForm(@PathVariable("appoId") int appoId, Model model) {

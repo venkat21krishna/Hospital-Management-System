@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "medicines")
+@Table(name = "meds")
 public class Med {
 
 	@Id
@@ -17,14 +17,14 @@ public class Med {
 	@Column(name = "id")
 	private int id;
 	
-	@Column(name="medName")
-	private String medName;
+	@Column(name="name")
+	private String name;
 
-	@Column(name="expDate")
-	private String expDate;
+	@Column(name="exp")
+	private String exp;
 
-	@Column(name="regDate")
-	private String regDate;
+	@Column(name="reg")
+	private String reg;
 
 	@Column(name="count")
 	private int count;
@@ -37,28 +37,28 @@ public class Med {
 		return id;
 	}
 
-	public void setMedName(String medName){
-		this.medName=medName;
+	public void setName(String name){
+		this.name=name;
 	}
 
-	public String getMedName(){
-		return medName;
+	public String getName(){
+		return name;
 	}
 
-	public void setExpDate(String expDate){
-		this.expDate=expDate;
+	public void setExp(String exp){
+		this.exp=exp;
 	}
 
-	public String getExpDate(){
-		return expDate;
+	public String getExp(){
+		return exp;
 	}
 
-	public void setRegDate(String regDate){
-		this.regDate=regDate;
+	public void setReg(String reg){
+		this.reg=reg;
 	}
 
-	public String getRegDate(){
-		return regDate;
+	public String getReg(){
+		return reg;
 	}
 
 	public void setCount(int count){
@@ -71,8 +71,8 @@ public class Med {
 
 	@Override
 	public String toString(){
-		return "Med [id="+ id + ", medicine_name= " + medName + ", expiration_date= " + expDate + 
-		",registered_date= " + regDate + " , count= " + count + "]";
+		return "Med [id="+ id + ", name= " + name + ", exp= " + exp + 
+		",reg= " + reg + " , count= " + count + "]";
 	}
 
 

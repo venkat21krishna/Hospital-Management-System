@@ -104,53 +104,39 @@
                 Update User
             </div>
             <div class="form-body">
-                <form th:action="@{/admin/update-user}" th:object="${user}" method="post">
+                <form th:action="@{/admin/update-med}" th:object="${appo}" method="post">
                     <!-- Basic Information -->
                     <input type="hidden" th:field="*{id}" />
 
+
                     <div class="form-group row">
-                        <label for="id">User ID</label>
+                        <label for="firstName">Medicine Name</label>
                         <div class="col-sm-9">
-                            <input type="text" id="id" th:value="${user.id}" readonly />
+                            <input type="text" id="name" th:value="${appo.name}" th:field="*{name}" required />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="firstName">First Name</label>
+                        <label for="lastName">Expiray Date</label>
                         <div class="col-sm-9">
-                            <input type="text" id="firstName" th:value="${user.firstName}" th:field="*{firstName}"
-                                required />
+                            <input type="text" id="exp" th:value="${appo.exp}" th:field="*{exp}" required />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="lastName">Last Name</label>
+                        <label for="email">Registration Date</label>
                         <div class="col-sm-9">
-                            <input type="text" id="lastName" th:value="${user.lastName}" th:field="*{lastName}"
-                                required />
+                            <input type="text" id="reg" th:value="${appo.reg}" th:field="*{reg}" required />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="email">Email</label>
+                        <label for="email">Count</label>
                         <div class="col-sm-9">
-                            <input type="email" id="email" th:value="${user.email}" th:field="*{email}" required />
+                            <input type="number" id="count" th:value="${appo.count}" th:field="*{count}" required />
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="gender">Gender</label>
-                        <div class="col-sm-9">
-                            <div>
-                                <input type="radio" id="male" name="gender" th:field="*{gender}" value="Male" required />
-                                <label for="male">Male</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="female" name="gender" th:field="*{gender}" value="Female" required />
-                                <label for="female">Female</label>
-                            </div>
-                        </div>
-                    </div>
-                    
+
 
                     <!-- Submit Button -->
-                     
+
                     <div class="form-group row">
                         <div class="col-sm-9 offset-sm-3 ml-30">
                             <button type="submit" class="btn-primary">Update</button>

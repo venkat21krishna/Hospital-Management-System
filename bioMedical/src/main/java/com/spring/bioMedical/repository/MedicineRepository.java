@@ -12,5 +12,6 @@ import com.spring.bioMedical.entity.Med;
 public interface MedicineRepository extends JpaRepository<Med, Integer> {
             Med findById(int apId);
             List<Med> findAll();
+            void deleteById(int apId);
 
 }
