@@ -129,7 +129,7 @@
 <body id="page-top">
 
   <nav class="navbar navbar-expand navbar-dark static-top">
-    <a class="navbar-brand mr-1" href="AdminHome.jsp">Doctor+ Admin Dashboard</a>
+    <a class="navbar-brand mr-1" href="@{admin/user-details}">Admin Dashboard</a>
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="fas fa-bars"></i>
     </button>
@@ -159,51 +159,67 @@
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin/user-details}">
-          <i class="fas fa-fw fa-user"></i>
-          <span>User Details</span>
+        <a class="nav-link" href="#">
+          <i class="fas fa-fw fa-plus-circle"></i>
+          <span>Add Details</span>
         </a>
+        <ul>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/add-admin}">
+              <i class="fas fa-fw fa-user-plus"></i>
+              <span>Add Admin</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/add-doctor}">
+              <i class="fas fa-fw fa-user-md"></i>
+              <span>Add Doctor</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/add-user}">
+              <i class="fas fa-fw fa-user-cog"></i>
+              <span>Add User</span>
+            </a>
+          </li>
+        </ul>
       </li>
       <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin/appointments}">
-          <i class="fas fa-fw fa-calendar-check"></i>
-          <span>Appointments</span>
+        <a class="nav-link" href="#">
+          <i class="fas fa-fw fa-eye"></i>
+          <span>View Details</span>
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin/doctor-details}">
-          <i class="fas fa-fw fa-stethoscope"></i>
-          <span>Doctor Details</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin/admin-details}">
-          <i class="fas fa-fw fa-user-shield"></i>
-          <span>Admin Details</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin/add-doctor}">
-          <i class="fas fa-fw fa-user-md"></i>
-          <span>Add Doctor</span>
-        </a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" th:href="@{/admin/add-admin}">
-          <i class="fas fa-fw fa-user-plus"></i>
-          <span>Add Admin</span>
-        </a>
+        <ul>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/appointments}">
+              <i class="fas fa-fw fa-calendar-check"></i>
+              <span>Appointments</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/user-details}">
+              <i class="fas fa-fw fa-user"></i>
+              <span>User Details</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/doctor-details}">
+              <i class="fas fa-fw fa-stethoscope"></i>
+              <span>Doctor Details</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/admin-details}">
+              <i class="fas fa-fw fa-user-shield"></i>
+              <span>Admin Details</span>
+            </a>
+          </li>
+        </ul>
       </li>
       <li class="nav-item">
         <a class="nav-link" th:href="@{/admin/edit-my-profile}">
           <i class="fas fa-fw fa-user-cog"></i>
           <span>My Profile</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/admin/add-user}">
-          <i class="fas fa-fw fa-user-cog"></i>
-          <span>Add User</span>
         </a>
       </li>
     </ul>
@@ -244,6 +260,11 @@
                     <th>Time</th>
                     <th>Description</th>
                     <th>Reg. Time</th>
+                    <th>Specialist</th>
+                    <th>Phone</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Doctor Desc</th>
                     <th>Options</th>
                   </tr>
                 </thead>
@@ -258,14 +279,18 @@
                     <td th:text="${temp.description}" />
                     <td th:text="${temp.regtime}" />
                     <td th:text="${temp.specialist}" />
-
+                    <td th:text="${temp.phone}" />
+                    <td th:text="${temp.age}" />
+                    <td th:text="${temp.gender}" />
+                    <td th:text="${temp.doctorDesc}" />
                     <td>
                       <form th:action="@{/admin/delete-app/{appointId}(appointId=${temp.id})}" method="post"
                         style="display:inline;">
                         <input type="hidden" name="_method" value="delete" />
                         <button type="submit" class="btn btn-danger">Delete</button>
                       </form>
-                      <a th:href="@{/admin/update-app/{appoId}(appoId=${temp.id})}" class="btn btn-primary" style="display: inline;">Update</a>
+                      <a th:href="@{/admin/update-app/{appoId}(appoId=${temp.id})}" class="btn btn-primary"
+                        style="display: inline;">Update</a>
                     </td>
 
                   </tr>
@@ -274,7 +299,7 @@
               </table>
             </div>
           </div>
-          <div class="card-footer small text-muted">Doctor+</div>
+
         </div>
         <!-- /.container-fluid -->
       </div>

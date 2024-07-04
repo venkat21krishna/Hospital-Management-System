@@ -12,5 +12,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
             List<Appointment> findByEmail(String email);
             Appointment findById(int apId);
             void deleteById(int apId);
+            // void save(Appointment appointment);
 
 }

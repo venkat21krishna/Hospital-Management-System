@@ -104,34 +104,34 @@
                 Update User
             </div>
             <div class="form-body">
-                <form th:action="@{/admin/update-user}" th:object="${user}" method="post">
+                <form th:action="@{/admin/update-doc}" th:object="${users}" method="post">
                     <!-- Basic Information -->
                     <input type="hidden" th:field="*{id}" />
 
                     <div class="form-group row">
                         <label for="id">User ID</label>
                         <div class="col-sm-9">
-                            <input type="text" id="id" th:value="${user.id}" readonly />
+                            <input type="text" id="id" th:value="${users.id}" readonly />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="firstName">First Name</label>
                         <div class="col-sm-9">
-                            <input type="text" id="firstName" th:value="${user.firstName}" th:field="*{firstName}"
+                            <input type="text" id="firstName" th:value="${users.firstName}" th:field="*{firstName}"
                                 required />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="lastName">Last Name</label>
                         <div class="col-sm-9">
-                            <input type="text" id="lastName" th:value="${user.lastName}" th:field="*{lastName}"
+                            <input type="text" id="lastName" th:value="${users.lastName}" th:field="*{lastName}"
                                 required />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="email">Email</label>
                         <div class="col-sm-9">
-                            <input type="email" id="email" th:value="${user.email}" th:field="*{email}" required />
+                            <input type="email" id="email" th:value="${users.email}" th:field="*{email}" required />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -147,17 +147,11 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="form-group row">
-                        <label for="role">Role</label>
-                        <div class="col-sm-9">
-                            <input type="text" id="role" th:value="${user.role}" th:field="*{role}" required />
-                        </div>
-                    </div> -->
+                    
 
                     <!-- Submit Button -->
-                     
                     <div class="form-group row">
-                        <div class="col-sm-9 offset-sm-3 ml-30">
+                        <div class="col-sm-9 offset-sm-3">
                             <button type="submit" class="btn-primary">Update</button>
                         </div>
                     </div>

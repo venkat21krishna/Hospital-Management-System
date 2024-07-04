@@ -35,6 +35,14 @@ public class Appointment {
 	@Column(name = "description")
 	private String description;
 
+	@Column(name="gender")
+	private String gender;
+
+	@Column(name="age")
+	private int age;
+
+	@Column(name="phone")
+	private String phone;
 	
 	@Column(name = "regtime")
 	@Transient
@@ -46,7 +54,30 @@ public class Appointment {
     @Column(name = "specialist")
     private String specialist;
 
-    // Getters and setters for new columns
+    public String getPhone(){
+		return phone;
+	}
+
+	public void setPhone(String phone){
+		this.phone=phone;
+	}
+
+	public String getGender(){
+		return gender;
+	}
+
+	public void setGender(String gender){
+		this.gender=gender;
+	}
+
+	public int getAge(){
+		return age;
+	}
+
+	public void setAge(int age){
+		this.age=age;
+	}
+
     public String getDoctorDesc() {
         return doctorDesc;
     }

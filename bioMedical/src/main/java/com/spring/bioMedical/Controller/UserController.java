@@ -177,47 +177,51 @@ public class UserController {
 		return "user/blog-single";
 	}
 	
-	@GetMapping("/blog")
-	public String blog(Model model){
+	@GetMapping("/edit-user-profile")
+	public String EditForm(Model theModel) {
 		
-		// get last seen
 		String username="";
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof UserDetails) {
 		   username = ((UserDetails)principal).getUsername();
 		  String Pass = ((UserDetails)principal).getPassword();
 		  System.out.println("One + "+username+"   "+Pass);
-		  
-		  
 		} else {
 		 username = principal.toString();
 		  System.out.println("Two + "+username);
-		}
+		}	
+		
+		
 		
 		Admin admin = adminServiceImplementation.findByEmail(username);
 				 
-			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-		    Date now = new Date();  
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+		Date now = new Date();  
 		    
-		         String log=now.toString();
+		String log=now.toString();
 		    
-		         admin.setLastseen(log);
+		admin.setLastseen(log);
 		         
-		         adminServiceImplementation.save(admin);
+		adminServiceImplementation.save(admin);
 		
-		 
-		         
-		 Appointment obj=new Appointment();
-		 
-		 obj.setName(admin.getFirstName()+" "+admin.getLastName());
-		 
-		 obj.setEmail(admin.getEmail());
+		// System.out.println(admin);
+		
+		theModel.addAttribute("profile", admin);
+		
+		return "user/updateUserProfile";
+	}
 			
-		 System.out.println(obj);
-		 
-		 model.addAttribute("app",obj);
+	
+	@PostMapping("/update")
+	public String update(@ModelAttribute("profile") Admin admin) {
 		
-		return "user/blog";
+		
+		System.out.println(admin);
+		
+		adminServiceImplementation.save(admin);
+		
+		// use a redirect to prevent duplicate submissions
+		return "redirect:/user/index";
 	}
 	
 	@GetMapping("/contact")
@@ -308,7 +312,8 @@ public class UserController {
 		return "user/department-single";
 	}
 
-	@RequestMapping("/departments")
+	// @RequestMapping("/departments")
+	@RequestMapping("/appointments")
 	public String indexes(Model appoint){
 
 	
@@ -352,7 +357,8 @@ public class UserController {
 		// add to the spring model
 		appoint.addAttribute("app", list);
 		
-		return "user/departments";
+		// return "user/departments";
+		return "user/appointments";
 	}
 
 	@GetMapping("/doctor")

@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.bioMedical.entity.Admin;
+import com.spring.bioMedical.entity.Med;
 import com.spring.bioMedical.entity.Appointment;
 import com.spring.bioMedical.service.AdminServiceImplementation;
 import com.spring.bioMedical.service.AppointmentServiceImplementation;
+import com.spring.bioMedical.service.MedicineServiceImplementation;
+
 import com.spring.bioMedical.service.UserService;
 
 
@@ -33,15 +36,19 @@ public class AdminController {
 
 	private AdminServiceImplementation adminServiceImplementation;
 	
+	private MedicineServiceImplementation medicineServiceImplementation;
 	private AppointmentServiceImplementation appointmentServiceImplementation;
+
+	
 
 	
 	@Autowired
 	public AdminController(UserService userService,AdminServiceImplementation obj,
-			AppointmentServiceImplementation app) {
+			AppointmentServiceImplementation app, MedicineServiceImplementation medicines) {
 		this.userService = userService;
 		adminServiceImplementation=obj;
 		appointmentServiceImplementation=app;
+		medicineServiceImplementation=medicines;
 	}
 	
 	
@@ -329,15 +336,6 @@ public class AdminController {
 		return "redirect:/admin/user-details";
 	}
 
-
-
-	
-
-
-
-
-
-
 	@GetMapping("/edit-my-profile")
 	public String EditForm(Model theModel) {
 		
@@ -376,21 +374,13 @@ public class AdminController {
 	@PostMapping("/update")
 	public String update(@ModelAttribute("profile") Admin admin) {
 		
-		
-		System.out.println(admin);
-		
 		adminServiceImplementation.save(admin);
-		
-		// use a redirect to prevent duplicate submissions
 		return "redirect:/admin/user-details";
 	}
 	
 	
 	@RequestMapping("/appointments")
 	public String appointments(Model model){
-		
-		
-		// get last seen
 		String username="";
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof UserDetails) {
@@ -412,6 +402,16 @@ public class AdminController {
 		
 		
 		return "admin/appointment";
+	}
+
+	@RequestMapping("/get-medicines")
+	public String mediciness(Model model){
+			
+		List<Med> list=medicineServiceImplementation.findAll();
+		model.addAttribute("medicines", list);
+		
+		
+		return "admin/medDetails";
 	}
 
 
@@ -447,7 +447,7 @@ public class AdminController {
 		else{
             redirectAttributes.addFlashAttribute("errorMessage", "Deletion failed.");
 		}
-		return "redirect:/admin/doctor-details";
+		return "redirect:/admin/appointment";
 	}
 
 	@GetMapping("/update-app/{appoId}")
@@ -457,27 +457,59 @@ public class AdminController {
             model.addAttribute("appo", appo);
             return "updateappo";
         }
-        return "redirect:/admin/user-details";
+        return "redirect:/admin/appointment";
     }
 
 	@PostMapping("update-app")
     public String updateappUser(@ModelAttribute("appo") Appointment appoint, RedirectAttributes redirectAttributes) {
-        Appointment existingAppointment = appointmentServiceImplementation.findById(16);
+        Appointment existingAppointment = appointmentServiceImplementation.findById(appoint.getId());
         if (existingAppointment != null) {
 			    existingAppointment.setName(appoint.getName());
 			    existingAppointment.setEmail(appoint.getEmail());
 			    existingAppointment.setDate(appoint.getDate());
 			    existingAppointment.setTime(appoint.getTime());
+				existingAppointment.setGender(appoint.getGender());
+				existingAppointment.setAge(appoint.getAge());
+				existingAppointment.setPhone(appoint.getPhone());
 				Date now = new Date();  
 				String log=now.toString();
 				
 				existingAppointment.setRegtime(appoint.getRegtime());
 				appointmentServiceImplementation.save(existingAppointment);
-            	redirectAttributes.addFlashAttribute("successMessage", "Appointment updated successfully.");
+            	redirectAttributes.addFlashAttribute("successMessage", "Appointment by admin updated successfully.");
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "Appointment update failed.");
+            redirectAttributes.addFlashAttribute("errorMessage", "Appointment by admin update failed.");
         }
         return "redirect:/admin/appointments";
+    }
+
+	@GetMapping("/update-doc/{docId}")
+    public String showdocUpdateForm(@PathVariable("docId") int docId, Model model) {
+        Admin users =adminServiceImplementation.findById(docId);
+        if (users != null) {
+            model.addAttribute("users", users);
+            return "updatedoc";
+        }
+        return "redirect:/admin/doctor";
+    }
+
+	@PostMapping("/update-doc")
+    public String updateDoc(@ModelAttribute("users") Admin updatedUser, RedirectAttributes redirectAttributes) {
+		
+        Admin existingUsers = adminServiceImplementation.findById(updatedUser.getId());
+        if (existingUsers != null) {
+			    existingUsers.setFirstName(updatedUser.getFirstName());
+			    existingUsers.setLastName(updatedUser.getLastName());
+			    existingUsers.setEmail(updatedUser.getEmail());
+			    existingUsers.setGender(updatedUser.getGender());
+			    existingUsers.setRole(updatedUser.getRole());
+				adminServiceImplementation.save(existingUsers);
+            redirectAttributes.addFlashAttribute("successMessage", "Doctor updated successfully.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Doctor update failed.");
+			
+        }
+        return "redirect:/admin/doctor-details";
     }
 
 	@GetMapping("/update-user/{userId}")
@@ -492,8 +524,8 @@ public class AdminController {
 
     @PostMapping("update-user")
     public String updateUser(@ModelAttribute("user") Admin updatedUser, RedirectAttributes redirectAttributes) {
-		int ids=updatedUser.getId();
-        Admin existingUser = adminServiceImplementation.findById(ids);
+		// int ids=updatedUser.getId();
+        Admin existingUser = adminServiceImplementation.findById(updatedUser.getId());
         if (existingUser != null) {
 			    existingUser.setFirstName(updatedUser.getFirstName());
 			    existingUser.setLastName(updatedUser.getLastName());
@@ -506,6 +538,7 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("errorMessage", "User update failed.");
 			
         }
+		// adminServiceImplementation.save(updatedUser);
         return "redirect:/admin/user-details";
     }
 

@@ -54,8 +54,17 @@ public class User {
 	@Column(name = "lastseen")
 	@Transient
 	private String lastseen;
+
+	@Column(name="phone")
+	private String phone;
 	
-	
+	public String getPhone(){
+		return phone;
+	}
+
+	public void setPhone(String phone){
+		this.phone=phone;
+	}
 	
 	
 	public String getLastseen() {

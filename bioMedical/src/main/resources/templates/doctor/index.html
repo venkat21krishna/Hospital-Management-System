@@ -129,7 +129,7 @@
 <body id="page-top">
 
     <nav class="navbar navbar-expand navbar-dark static-top">
-        <a class="navbar-brand mr-1" href="AdminHome.jsp">Doctor+ Admin Dashboard</a>
+        <a class="navbar-brand mr-1" href="AdminHome.jsp">Doctor Dashboard</a>
         <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
             <i class="fas fa-bars"></i>
         </button>
@@ -166,7 +166,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/doctor/index}">
+                <a class="nav-link" th:href="@{/doctor/edit-doc-profile}">
                     <i class="fas fa-fw fa-user-cog"></i>
                     <span>My Profile</span>
                 </a>
@@ -191,6 +191,9 @@
                 <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
                     <span th:text="${errorMessage}"></span>
                 </div>
+                <div th:if="${appointmentId}">
+                    <p>Appointment ID: <span th:text="${appointmentId}"></span></p>
+                </div>
 
                 <div class="card mb-3">
                     <div class="card-header">
@@ -211,6 +214,9 @@
                                         <th>Reg. Time</th>
                                         <th>Specialist</th>
                                         <th>Doctor Response</th>
+                                        <th>Gender</th>
+                                        <th>Age</th>
+                                        <th>Phone</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -224,9 +230,13 @@
                                         <td th:text="${temp.regtime}"></td>
                                         <td th:text="${temp.specialist}"></td>
                                         <td th:text="${temp.doctorDesc}"></td>
+                                        <td th:text="${temp.gender}"></td>
+                                        <td th:text="${temp.age}"></td>
+                                        <td th:text="${temp.phone}"></td>
                                         <td>
-                                            <a th:href="@{/doctor/update-app/{appoId}(appoId=${temp.id})}" class="btn btn-primary" style="display: inline;">Update</a>
-                                          </td>
+                                            <a th:href="@{/doctor/update-app/{appoId}(appoId=${temp.id})}"
+                                                class="btn btn-primary" style="display: inline;">Update</a>
+                                        </td>
 
                                     </tr>
                                 </tbody>
@@ -273,7 +283,7 @@
         </div>
     </div>
 
-  
+
 
 
 

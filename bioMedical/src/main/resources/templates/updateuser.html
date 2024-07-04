@@ -106,6 +106,8 @@
             <div class="form-body">
                 <form th:action="@{/admin/update-user}" th:object="${user}" method="post">
                     <!-- Basic Information -->
+                    <input type="hidden" th:field="*{id}" />
+
                     <div class="form-group row">
                         <label for="id">User ID</label>
                         <div class="col-sm-9">
@@ -135,19 +137,27 @@
                     <div class="form-group row">
                         <label for="gender">Gender</label>
                         <div class="col-sm-9">
-                            <input type="text" id="gender" th:value="${user.gender}" th:field="*{gender}" required />
+                            <div>
+                                <input type="radio" id="male" name="gender" th:field="*{gender}" value="Male" required />
+                                <label for="male">Male</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="female" name="gender" th:field="*{gender}" value="Female" required />
+                                <label for="female">Female</label>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                         <label for="role">Role</label>
                         <div class="col-sm-9">
                             <input type="text" id="role" th:value="${user.role}" th:field="*{role}" required />
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Submit Button -->
+                     
                     <div class="form-group row">
-                        <div class="col-sm-9 offset-sm-3">
+                        <div class="col-sm-9 offset-sm-3 ml-30">
                             <button type="submit" class="btn-primary">Update</button>
                         </div>
                     </div>

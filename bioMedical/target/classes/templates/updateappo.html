@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Appointment</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css">
     <style>
         body {
             background-color: #f8f9fa;
@@ -74,6 +76,34 @@
         .btn-primary:hover {
             background-color: #0056b3;
         }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group label {
+            margin-right: 15px;
+        }
+
+        .gender-options {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .gender-options label {
+            margin-left: 5px;
+        }
+
+        .ui-datepicker {
+            z-index: 1000 !important;
+            position: absolute;
+        }
+
+        .ui-timepicker-wrapper {
+            z-index: 1000 !important;
+        }
     </style>
 </head>
 
@@ -81,6 +111,7 @@
     <div class="container">
         <h2>Update Appointment</h2>
         <form th:action="@{/admin/update-app}" th:object="${appo}" method="post">
+            <input type="hidden" th:field="*{id}" />
             <div class="form-row">
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -93,7 +124,7 @@
             </div>
             <div class="form-row">
                 <div class="form-group">
-                    <label for="date">Date</label>
+                    <label for="date">Date </label>
                     <input type="text" id="date" th:field="*{date}" class="form-control datepicker" required />
                 </div>
                 <div class="form-group">
@@ -101,6 +132,17 @@
                     <input type="text" id="time" th:field="*{time}" class="form-control timepicker" required />
                 </div>
             </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="date">Age</label>
+                    <input type="number" id="age" th:field="*{age}" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="time">Mobile</label>
+                    <input type="text" id="phone" th:field="*{phone}" class="form-control " required />
+                </div>
+            </div>
+
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea id="description" th:field="*{description}" class="form-control" rows="3" required></textarea>
@@ -109,39 +151,51 @@
                 <label for="regtime">Registration Time</label>
                 <input type="datetime-local" id="regtime" th:field="*{regtime}" class="form-control" readonly />
             </div>
+            <div class="form-group">
+                <label for="gender" class="col-form-label">Gender</label>
+                <div class="gender-options">
+                    <div>
+                        <input type="radio" id="male" name="gender" th:field="*{gender}" value="Male" required />
+                        <label for="male">Male</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="female" name="gender" th:field="*{gender}" value="Female" required />
+                        <label for="female">Female</label>
+                    </div>
+                </div>
+            </div>
             <button type="submit" class="btn-primary">Update</button>
         </form>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.js"></script>
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../js/bootstrap-datepicker.js"></script>
     <script src="../js/jquery.timepicker.min.js"></script>
     <script>
-        $(document).ready(function(){
-            $('.datepicker').datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true
+        $(document).ready(function() {
+            // Initialize the date picker
+            $(".datepicker").datepicker({
+                dateFormat: 'dd-mm-yy',
+                changeMonth: true,
+                changeYear: true
             });
-
-            $('.timepicker').timepicker({
+    
+            // Initialize the time picker
+            $(".timepicker").timepicker({
                 timeFormat: 'h:mm p',
                 interval: 30,
-                minTime: '12:00am',
+                minTime: '00:00',
                 maxTime: '11:30pm',
-                defaultTime: 'now',
-                startTime: '12:00am',
+                defaultTime: '09:00am',
+                startTime: '00:00',
                 dynamic: false,
                 dropdown: true,
-                scrollbar: true,
-                
+                scrollbar: true
             });
-            $('.timepicker').on('changeTime', function() {
-            $(this).trigger('input');
-        });
         });
     </script>
 </body>

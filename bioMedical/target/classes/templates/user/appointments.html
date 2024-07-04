@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Admin page</title>
+  <title>Appointments page</title>
 
 
   <!-- Bootstrap core CSS-->
@@ -24,6 +24,27 @@
 
   <!-- Custom styles for this template-->
   <link href="../vendor/css/sb-admin.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/open-iconic-bootstrap.min.css">
+  <link rel="stylesheet" href="../css/animate.css">
+
+  <link rel="stylesheet" href="../css/owl.carousel.min.css">
+  <link rel="stylesheet" href="../css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="../css/magnific-popup.css">
+
+  <link rel="stylesheet" href="../css/aos.css">
+
+  <link rel="stylesheet" href="../css/ionicons.min.css">
+
+  <link rel="stylesheet" href="../css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="../css/jquery.timepicker.css">
+
+
+  <!-- <link rel="stylesheet" href="../css/flaticon.css"> -->
+  <link rel="stylesheet" href="../css/icomoon.css">
+  <link rel="stylesheet" href="../css/style.css">
   <style>
     body {
       background-image: url('https://t3.ftcdn.net/jpg/06/61/06/74/240_F_661067435_cdi1wpytl4pvfzBYYDryTfcscE1ZpYRB.jpg');
@@ -43,13 +64,14 @@
       border-radius: 10px;
       margin: 20px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      margin-top: 100px;
     }
 
     .container-fluid {
       width: 99%;
     }
 
-    .navbar {
+    /* .navbar {
       background-color: #343a40;
     }
 
@@ -68,7 +90,7 @@
 
     .sidebar .nav-link:hover {
       background-color: #0056b3;
-    }
+    } */
 
     .form-control {
       border-radius: 5px;
@@ -123,18 +145,58 @@
       padding: 15px 0;
       backdrop-filter: blur(5px);
     }
+    
   </style>
 </head>
 
 <body id="page-top">
-
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><strong><span><strong>VEINS</strong></span></strong></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+        aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="oi oi-menu"></span> Menu
+      </button>
   
-
-    <div id="content-wrapper">
-
-      <div class="container-fluid">
-
-        
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a th:href="@{/user/index}" class="nav-link">Home</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a th:href="@{/user/about}" class="nav-link">About</a>
+          </li> -->
+          <li class="nav-item">
+            <a th:href="@{/user/appointments}" class="nav-link">MY Appointments</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a th:href="@{/user/doctor}" class="nav-link">Doctors</a>
+          </li> -->
+          <li class="nav-item">
+            <a th:href="@{/user/edit-user-profile}" class="nav-link">My Profile</a>
+          </li>
+          <li class="nav-item">
+            <a th:href="@{/user/contact}" class="nav-link">Contact</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" data-toggle="modal" data-target="#modalAppointment">
+              <span>Make an Appointment</span>
+            </a>
+          </li>
+          <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+          <li class="nav-item">
+            <form th:action="@{/logout}" method="POST">
+              <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <br></br>
+    
+    <div id="content-wrapper " >
+      <div class="container-fluid">      
 
         <div th:if="${successMessage}" class="alert alert-success" role="alert">
           <span th:text="${successMessage}"></span>
@@ -144,9 +206,9 @@
         </div>
 
         <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            Data Table
+          <div class="card-header" style="background-color: #007bff;font-size: 30px;">
+            <!-- <i class="fas fa-table"></i> -->
+            My Appointments
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -161,6 +223,9 @@
                     <th>Description</th>
                     <th>Reg. Time</th>
                     <th>Specialist</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Phone</th>
                     <th>Doctor Response</th>
                   </tr>
                 </thead>
@@ -175,6 +240,9 @@
                     <td th:text="${temp.description}" />
                     <td th:text="${temp.regtime}" />
                     <td th:text="${temp.specialist}" />
+                    <td th:text="${temp.gender}" />
+                    <td th:text="${temp.age}" />
+                    <td th:text="${temp.phone}"/>
                     <td th:text="${temp.doctorDesc}"/>
 					
 
@@ -184,7 +252,7 @@
               </table>
             </div>
           </div>
-          <div class="card-footer small text-muted">Doctor+</div>
+          <div class="card-footer small text-muted"></div>
         </div>
         <!-- /.container-fluid -->
       </div>

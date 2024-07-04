@@ -80,7 +80,8 @@
 <body>
     <div class="container">
         <h2>Update Appointment</h2>
-        <form th:action="@{/admin/update-app}" th:object="${appo}" method="post">
+        <form th:action="@{/doctor/update-app}" th:object="${appo}" method="post">
+            <input type="hidden" th:field="*{id}" />
             <div class="form-row">
                 <div class="form-group">
                     <label for="name">Name</label>
